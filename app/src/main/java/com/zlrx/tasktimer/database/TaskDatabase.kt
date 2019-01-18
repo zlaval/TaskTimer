@@ -18,16 +18,12 @@ abstract class TaskDatabase : RoomDatabase() {
         private var INSTANCE: TaskDatabase? = null
 
         fun getDatabase(context: Context): TaskDatabase? {
-            if (INSTANCE == null) {
-                synchronized(TaskDatabase::class) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(
-                            context.applicationContext,
-                            TaskDatabase::class.java,
-                            Const.DB_NAME
-                        ).build()
-                    }
-                }
+            INSTANCE = INSTANCE ?: synchronized(TaskDatabase::class) {
+                INSTANCE ?: Room.databaseBuilder(
+                    context.applicationContext,
+                    TaskDatabase::class.java,
+                    Const.DB_NAME
+                ).build()
             }
             return INSTANCE
         }
