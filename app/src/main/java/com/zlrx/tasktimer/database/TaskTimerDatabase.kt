@@ -5,27 +5,28 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.zlrx.tasktimer.Const
+import com.zlrx.tasktimer.database.dao.TaskDao
 import com.zlrx.tasktimer.model.Task
-import com.zlrx.tasktimer.repository.TaskRepository
 
 @Database(entities = [Task::class], version = 1)
-abstract class TaskDatabase : RoomDatabase() {
+abstract class TaskTimerDatabase : RoomDatabase() {
 
-    abstract fun taskRepository(): TaskRepository
+    abstract fun taskDao(): TaskDao
 
     companion object {
 
-        private var INSTANCE: TaskDatabase? = null
+        @Volatile
+        private var INSTANCE: TaskTimerDatabase? = null
 
-        fun getDatabase(context: Context): TaskDatabase? {
-            INSTANCE = INSTANCE ?: synchronized(TaskDatabase::class) {
+        fun getDatabase(context: Context): TaskTimerDatabase {
+            INSTANCE = INSTANCE ?: synchronized(TaskTimerDatabase::class) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
-                    TaskDatabase::class.java,
+                    TaskTimerDatabase::class.java,
                     Const.DB_NAME
                 ).build()
             }
-            return INSTANCE
+            return INSTANCE!!
         }
     }
 

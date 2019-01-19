@@ -8,15 +8,15 @@ import androidx.room.PrimaryKey
 data class Task(
 
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "_id")
-    var id: Int,
+    var id: Int? = null,
 
     @ColumnInfo(name = "name")
     var name: String,
 
     @ColumnInfo(name = "description")
-    var description: String,
+    var description: String? = null,
 
     @ColumnInfo(name = "sort_order")
-    var sortOrder: Int
+    var sortOrder: Int? = null
 
 )

@@ -1,18 +1,17 @@
 package com.zlrx.tasktimer.repository
 
-import androidx.room.*
+import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import com.zlrx.tasktimer.database.dao.TaskDao
 import com.zlrx.tasktimer.model.Task
 
-@Dao
-interface TaskRepository {
+class TaskRepository(private val taskDao: TaskDao) {
 
-    @Query("select * from tasks")
-    fun findAll(): List<Task>
+    val tasks: LiveData<List<Task>> = taskDao.findAll()
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(task: Task)
-
-    @Delete
-    fun delete(task: Task)
+    @WorkerThread
+    suspend fun insert(task: Task) {
+        taskDao.insert(task)
+    }
 
 }
