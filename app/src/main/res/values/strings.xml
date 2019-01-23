@@ -5,4 +5,5 @@
     <string name="menutitle_showDurations">Durations Report</string>
     <string name="menutitle_showAbout">About TaskTImer</string>
     <string name="menutitle_generate">Generate Data</string>
+    <string name="no_task_message">No Task Selected</string>
 </resources>

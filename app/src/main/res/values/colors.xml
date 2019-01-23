@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/primary</color>
+    <color name="colorPrimaryDark">@color/primaryDark</color>
+    <color name="colorAccent">#018786</color>
+
+    <color name="primary">@color/md_blue_800</color>
+    <color name="primaryDark">@color/md_blue_900</color>
+    <color name="primary50">@color/md_blue_50</color>
+    <color name="primary100">@color/md_blue_100</color>
+    <color name="primary200">@color/md_blue_200</color>
+    <color name="primary300">@color/md_blue_300</color>
+    <color name="primary400">@color/md_blue_400</color>
+    <color name="primary500">@color/md_blue_500</color>
+    <color name="primary600">@color/md_blue_600</color>
+    <color name="primary700">@color/md_blue_700</color>
+    <color name="primary800">@color/md_blue_800</color>
+    <color name="primary900">@color/md_blue_900</color>
+
+
+    <color name="md_blue_50">#E3F2FD</color>
+    <color name="md_blue_100">#BBDEFB</color>
+    <color name="md_blue_200">#90CAF9</color>
+    <color name="md_blue_300">#64B5F6</color>
+    <color name="md_blue_400">#42A5F5</color>
+    <color name="md_blue_500">#2196F3</color>
+    <color name="md_blue_600">#1E88E5</color>
+    <color name="md_blue_700">#1976D2</color>
+    <color name="md_blue_800">#1565C0</color>
+    <color name="md_blue_900">#0E4686</color>
+
 </resources>
