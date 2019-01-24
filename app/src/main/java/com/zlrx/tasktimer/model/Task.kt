@@ -1,9 +1,13 @@
 package com.zlrx.tasktimer.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "tasks")
 data class Task(
 
@@ -19,4 +23,7 @@ data class Task(
     @ColumnInfo(name = "sort_order")
     var sortOrder: Int? = null
 
-)
+) : Parcelable {
+    @Ignore
+    constructor() : this(name = "")
+}
