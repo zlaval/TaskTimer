@@ -5,11 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
+import com.zlrx.tasktimer.fragment.AddEditTaskFragment
+import com.zlrx.tasktimer.model.Task
 import com.zlrx.tasktimer.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
 
     private lateinit var taskViewModel: TaskViewModel
 
@@ -20,11 +21,12 @@ class MainActivity : AppCompatActivity() {
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
         // observeTasks()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
+
+    override fun onSaveClicked() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
 //    private fun observeTasks() {
 //        taskViewModel.tasks.observe(this, Observer {
@@ -49,9 +51,18 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.mainMenuSettings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.mainMenuAddTask -> taskEditRequest(null)
+            //  R.id.mainMenuSettings -> true
+
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun taskEditRequest(task: Task?) {
+        val newFragment = AddEditTaskFragment.newInstance(task)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, newFragment)
+            .commit()
     }
 }

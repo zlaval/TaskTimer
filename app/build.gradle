@@ -41,6 +41,7 @@ dependencies {
     implementation group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: '2.0.0'
     implementation group: 'androidx.core', name: 'core-ktx', version: '1.0.1'
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     kapt group: 'androidx.room', name: 'room-compiler', version: '2.0.0'
 
     testImplementation 'junit:junit:4.12'
