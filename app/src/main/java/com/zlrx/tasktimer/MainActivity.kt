@@ -3,14 +3,19 @@ package com.zlrx.tasktimer
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.zlrx.tasktimer.fragment.AddEditTaskFragment
 import com.zlrx.tasktimer.model.Task
 import com.zlrx.tasktimer.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
+
+    private var twoPane = false
 
     private lateinit var taskViewModel: TaskViewModel
 
@@ -23,8 +28,19 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
 
     }
 
+    private fun removeEditPane(fragment: Fragment? = null) {
+        fragment?.let {
+            supportFragmentManager.beginTransaction()
+                .remove(it)
+                .commit()
+        }
+        taskDetailsContainer.visibility = if (twoPane) View.INVISIBLE else View.GONE
+        mainFragment.view?.visibility = View.VISIBLE
+    }
+
     override fun onSaveClicked() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val fragment = supportFragmentManager.findFragmentById(R.id.taskDetailsContainer)
+        removeEditPane(fragment)
     }
 
 
@@ -62,7 +78,7 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
     private fun taskEditRequest(task: Task?) {
         val newFragment = AddEditTaskFragment.newInstance(task)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, newFragment)
+            .replace(R.id.taskDetailsContainer, newFragment)
             .commit()
     }
 }

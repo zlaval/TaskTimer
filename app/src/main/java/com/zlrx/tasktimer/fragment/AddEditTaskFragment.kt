@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.zlrx.tasktimer.R
 import com.zlrx.tasktimer.model.Task
+import kotlinx.android.synthetic.main.fragment_add_edit.*
 
 private const val TAG = "AddEditTaskFragment"
 private const val ARG_TASK = "task"
@@ -31,6 +32,13 @@ class AddEditTaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_add_edit, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        btnEditTaskSave.setOnClickListener {
+            listener?.onSaveClicked()
+        }
     }
 
     override fun onAttach(context: Context) {
