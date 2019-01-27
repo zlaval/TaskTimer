@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
                 .commit()
         }
         showMainPane()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     override fun onSaveClicked() {
@@ -71,7 +72,10 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mainMenuAddTask -> taskEditRequest(null)
-
+            android.R.id.home -> {
+                val fragment = supportFragmentManager.findFragmentById(R.id.taskDetailsContainer)
+                removeEditPane(fragment)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

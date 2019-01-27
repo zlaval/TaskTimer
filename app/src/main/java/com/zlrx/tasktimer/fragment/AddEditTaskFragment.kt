@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.zlrx.tasktimer.R
 import com.zlrx.tasktimer.model.Task
@@ -36,6 +37,10 @@ class AddEditTaskFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val actionBar = (listener as AppCompatActivity).supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         btnEditTaskSave.setOnClickListener {
             listener?.onSaveClicked()
         }
