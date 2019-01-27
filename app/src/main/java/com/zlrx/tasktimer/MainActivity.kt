@@ -1,5 +1,6 @@
 package com.zlrx.tasktimer
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -24,8 +25,28 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
+        twoPane = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        restoreFragment()
         // observeTasks()
+    }
 
+    private fun restoreFragment() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.taskDetailsContainer)
+        if (fragment != null) {
+            showEditPane()
+        } else {
+            showMainPane()
+        }
+    }
+
+    private fun showEditPane() {
+        taskDetailsContainer.visibility = View.VISIBLE
+        mainFragment.view?.visibility = if (twoPane) View.VISIBLE else View.GONE
+    }
+
+    private fun showMainPane() {
+        taskDetailsContainer.visibility = if (twoPane) View.INVISIBLE else View.GONE
+        mainFragment.view?.visibility = View.VISIBLE
     }
 
     private fun removeEditPane(fragment: Fragment? = null) {
@@ -34,8 +55,7 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
                 .remove(it)
                 .commit()
         }
-        taskDetailsContainer.visibility = if (twoPane) View.INVISIBLE else View.GONE
-        mainFragment.view?.visibility = View.VISIBLE
+        showMainPane()
     }
 
     override fun onSaveClicked() {
@@ -43,8 +63,28 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
         removeEditPane(fragment)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
 
-//    private fun observeTasks() {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.mainMenuAddTask -> taskEditRequest(null)
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun taskEditRequest(task: Task?) {
+        val newFragment = AddEditTaskFragment.newInstance(task)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.taskDetailsContainer, newFragment)
+            .commit()
+        showEditPane()
+    }
+
+    //    private fun observeTasks() {
 //        taskViewModel.tasks.observe(this, Observer {
 //            it?.forEach { task ->
 //                Log.i("TASK", task.toString())
@@ -56,29 +96,4 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
 //        val task = Task(name = "Task")
 //        taskViewModel.insert(task)
 //    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.mainMenuAddTask -> taskEditRequest(null)
-            //  R.id.mainMenuSettings -> true
-
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun taskEditRequest(task: Task?) {
-        val newFragment = AddEditTaskFragment.newInstance(task)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.taskDetailsContainer, newFragment)
-            .commit()
-    }
 }
