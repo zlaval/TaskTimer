@@ -24,4 +24,8 @@ class TaskViewModel(application: Application) : CrContextAndroidViewModel(applic
         taskRepostory.insert(task)
     }
 
+    fun update(task: Task) = scope.launch(Dispatchers.IO) {
+        taskRepostory.update(task)
+    }
+
 }

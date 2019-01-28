@@ -22,4 +22,6 @@ data class Task(
     @ColumnInfo(name = "sort_order")
     var sortOrder: Int? = null
 
-) : Parcelable
+) : Parcelable {
+    constructor() : this(name = "")
+}

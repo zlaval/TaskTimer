@@ -14,4 +14,8 @@ class TaskRepository(private val taskDao: TaskDao) {
         taskDao.insert(task)
     }
 
+    fun update(task: Task) {
+        taskDao.update(task)
+    }
+
 }

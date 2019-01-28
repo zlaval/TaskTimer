@@ -2,11 +2,13 @@ package com.zlrx.tasktimer
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.zlrx.tasktimer.fragment.AddEditTaskFragment
 import com.zlrx.tasktimer.model.Task
@@ -27,7 +29,15 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
         twoPane = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         restoreFragment()
-        // observeTasks()
+        observeTasks()
+    }
+
+    private fun observeTasks() {
+        taskViewModel.tasks.observe(this, Observer {
+            it?.forEach { task ->
+                Log.i("TASK", task.toString())
+            }
+        })
     }
 
     private fun restoreFragment() {
@@ -88,16 +98,14 @@ class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
         showEditPane()
     }
 
-    //    private fun observeTasks() {
-//        taskViewModel.tasks.observe(this, Observer {
-//            it?.forEach { task ->
-//                Log.i("TASK", task.toString())
-//            }
-//        })
-//    }
-//
-//    fun insertTask(view: View) {
-//        val task = Task(name = "Task")
-//        taskViewModel.insert(task)
-//    }
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.taskDetailsContainer)
+        if (twoPane || fragment == null) {
+            super.onBackPressed()
+        } else {
+            removeEditPane(fragment)
+        }
+    }
+
 }
+
