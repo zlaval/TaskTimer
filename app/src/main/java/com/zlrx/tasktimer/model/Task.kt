@@ -10,7 +10,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "tasks")
 data class Task(
 
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "_id")
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
     var id: Int? = null,
 
     @ColumnInfo(name = "name")

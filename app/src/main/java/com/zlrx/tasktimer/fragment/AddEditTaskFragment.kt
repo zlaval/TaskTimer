@@ -63,7 +63,6 @@ class AddEditTaskFragment : Fragment() {
         }
     }
 
-    //TODO task should be immutable and not modify the param
     private fun setTaskValues(task: Task): Task {
         task.name = editTaskName.text.toString()
         task.description = editTaskDescription.text.toString()

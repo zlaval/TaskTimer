@@ -7,7 +7,7 @@ import com.zlrx.tasktimer.model.Task
 @Dao
 interface TaskDao {
 
-    @Query("select * from tasks")
+    @Query("select * from tasks order by sort_order asc")
     fun findAll(): LiveData<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

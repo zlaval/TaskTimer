@@ -10,22 +10,26 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : CrContextAndroidViewModel(application) {
 
-    private val taskRepostory: TaskRepository
+    private val taskRepository: TaskRepository
 
     val tasks: LiveData<List<Task>>
 
     init {
         val taskDao = TaskTimerDatabase.getDatabase(application).taskDao()
-        taskRepostory = TaskRepository(taskDao)
-        tasks = taskRepostory.tasks
+        taskRepository = TaskRepository(taskDao)
+        tasks = taskRepository.tasks
     }
 
     fun insert(task: Task) = scope.launch(Dispatchers.IO) {
-        taskRepostory.insert(task)
+        taskRepository.insert(task)
     }
 
     fun update(task: Task) = scope.launch(Dispatchers.IO) {
-        taskRepostory.update(task)
+        taskRepository.update(task)
+    }
+
+    fun delete(task: Task) = scope.launch(Dispatchers.IO) {
+        taskRepository.delete(task)
     }
 
 }

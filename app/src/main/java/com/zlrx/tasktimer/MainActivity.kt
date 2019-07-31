@@ -12,7 +12,11 @@ import com.zlrx.tasktimer.model.Task
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked {
+class MainActivity : AppCompatActivity(), AddEditTaskFragment.OnSaveClicked, MainActivityFragment.OnTaskEdit {
+
+    override fun onTaskEdit(task: Task) {
+        taskEditRequest(task)
+    }
 
     private var twoPane = false
 
